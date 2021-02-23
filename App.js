@@ -1,19 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, Image, View, ActivityIndicator } from 'react-native';
-import favicon from './assets/favicon.png';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import * as Location from 'expo-location';
 import WeatherInfo from './components/WeatherInfo'
 import UnitsPicker from './components/UnitsPicker'
 import Details from './components/Details'
 import Reload from './components/Reload'
-import {colors} from './utils/index'
+import {colors} from './utils/colors'
 import { WEATHER_API_KEY } from 'react-native-dotenv'
 
 
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
-const { PRIMARY_COLOR, SECONDARY_COLOR } = colors
-
+const { BACKGROUND_COLOR } = colors
 
 
 export default function App() {
@@ -65,20 +63,24 @@ export default function App() {
         </View>
         <WeatherInfo currentWeather={currentWeather}/>
         <Details currentWeather={currentWeather} unitsSystem={unitsSystem}/>
-        {/* <Image source={favicon} style={{width:100, height: 100}}/> */}
       </View>
     )} else if (errorMessage){
       return (
         <View style={styles.container}>
-          <Text>{errorMessage}</Text>
-          <StatusBar style="auto" />
+          <View>
+            <Text>{errorMessage}</Text>
+            <StatusBar style="auto" />
+          </View>
         </View>
       )
     } else {
+      /* when loading show activity indicator */
       return (
-        <View style={styles.container}>
-          <ActivityIndicator size="large" color={colors.PRIMARY_COLOR}/>
+        <View style={styles.containerLoading}>
           <StatusBar style="auto" />
+          <View>
+            <ActivityIndicator size="large" color={colors.PRIMARY_COLOR}/>
+          </View>
         </View>
       )
     }
@@ -87,7 +89,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#D2E6EB',
+    backgroundColor: BACKGROUND_COLOR,
     alignItems: 'center',
     justifyContent: 'space-between',
     alignContent: 'center',
@@ -97,9 +99,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    borderWidth: 2,
-    borderColor: 'green',
-    borderRadius: 10,
     marginTop: 24,
+  },
+  containerLoading: {
+    flex: 1,
+    backgroundColor: BACKGROUND_COLOR,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
   }
 });

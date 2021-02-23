@@ -1,28 +1,25 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
-import {colors} from '../utils/index'
-/* import { getIconForWeather } from '../utils/IconUtils'
- */
-const { PRIMARY_COLOR, SECONDARY_COLOR } = colors
+import {colors} from '../utils/colors'
+
+const { PRIMARY_COLOR, BLUE_COLOR, TRI_COLOR, } = colors
 
 export default function WeatherInfo({currentWeather}) {
-    console.log(currentWeather)
+    /* getting current weather data and city */
     const {
         main: { temp },
-        weather: [{icon, main, description }],
+        weather: [{icon, description }],
         name,
-        timezone,
     } = currentWeather
 
     const iconUrl = `https://openweathermap.org/img/wn/${icon}@4x.png`;
-    
+    const temperature = `${Math.round(temp)}°`;
     return (
         <View style={styles.weatherInfo}>
-            <Text>{name}</Text>
+            <Text style={styles.cityName}>{name}</Text>
             <Image source={{ uri: iconUrl }} style={styles.weatherIcon}/>
-            <Text style={styles.textPrimary}>{temp}°</Text>
             <Text style={styles.weatherDesc}>{description}</Text>
-            <Text>{timezone}</Text>
+            <Text style={styles.textTemp}>{temperature}</Text> 
         </View>
     )
 } 
@@ -30,20 +27,33 @@ export default function WeatherInfo({currentWeather}) {
 const styles = StyleSheet.create({
     weatherInfo: {
         alignItems: 'center',
+        justifyContent: 'space-around',
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: TRI_COLOR,
+        padding: 24,
+        alignItems: 'center',
+    },
+    cityName: {
+        fontSize: 20,
+        color: BLUE_COLOR,
+        fontWeight: '500',
+        letterSpacing: 0.5,
     },
     weatherIcon: {
-        width: 120,
-        height: 120,
+        width: 180,
+        height: 180,
     },
     weatherDesc: {
         textTransform: 'capitalize',
-        fontSize: 20,
-        color: SECONDARY_COLOR,
-        fontWeight: '500',
-        marginTop: 10,
+        fontSize: 24,
+        color: BLUE_COLOR,
+        letterSpacing: 1,
+        fontWeight: '800',
     },
-    textPrimary: {
+    textTemp: {
         fontSize: 30,
         color: PRIMARY_COLOR,
+        marginTop: 14,
     },
 })
