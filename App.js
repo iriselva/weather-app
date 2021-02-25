@@ -9,10 +9,8 @@ import Reload from './components/Reload'
 import {colors} from './utils/colors'
 import { WEATHER_API_KEY } from 'react-native-dotenv'
 
-
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
 const { BACKGROUND_COLOR } = colors
-
 
 export default function App() {
   const [errorMessage, setErrorMessage] = useState(null)
